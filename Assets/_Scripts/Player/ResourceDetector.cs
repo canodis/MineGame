@@ -9,6 +9,7 @@ public class ResourceDetector : MonoBehaviour
     [SerializeField] private ObjectPool HitEffectPool;
     [SerializeField] private GameObject hitEffect;
     [SerializeField] private float detectionRadius = 5f;
+    [SerializeField] private ResourceInfoController resourceInfoController;
 
     public Inventory inventory;
     public Transform pickaxeHitPoint;
@@ -16,18 +17,19 @@ public class ResourceDetector : MonoBehaviour
     public GameObject Pickaxe;
     public Material woodMaterial;
     public bool debugDraw;
-    [HideInInspector]
-    public bool mining = false;
+    [HideInInspector]public bool mining = false;
 
+    private MineSpawner mineSpawner;
     private GameObject resource;
     private equipmentState state;
-    private string resourceTag;
     private Material resourceMaterial;
+    private string resourceTag;
 
 
     void Start()
     {
         state = equipmentState.pickaxe;
+        mineSpawner = GameObject.FindGameObjectWithTag("MineSpawner").GetComponent<MineSpawner>();
     }
 
     public void detectResource()
@@ -66,6 +68,7 @@ public class ResourceDetector : MonoBehaviour
         resource = gameObject;
         resourceMaterial = resource.GetComponentInChildren<MeshRenderer>().material;
         mining = true;
+        resourceInfoController.ShowResourceInfoPanel(resource.GetComponent<Resource>());
     }
 
     public void damageToResource()
@@ -73,11 +76,16 @@ public class ResourceDetector : MonoBehaviour
         if (resource.GetComponent<Resource>().takeDamage(inventory.EquippedTool.GetComponent<EquippableTool>().damage))
         {
             inventory.addItem(resource.GetComponent<Resource>().itemData, 1);
+            mineSpawner.decreaseMineCount();
+            resource.GetComponent<FractureObject>().Fracture();
             Destroy(resource);
             resource = null;
             mining = false;
             anim.SetBool("mining", false);
-        }
+            resourceInfoController.HideResourceInfoPanel();
+        } 
+        else
+            resourceInfoController.UpdateResourceInfo(resource.GetComponent<Resource>());
         GetHitEffect();
     }
 

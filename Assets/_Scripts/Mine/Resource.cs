@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Resource : MonoBehaviour
@@ -21,5 +20,10 @@ public class Resource : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public string getHealth()
+    {
+        return health.ToString();
     }
 }

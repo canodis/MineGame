@@ -12,13 +12,14 @@ public class Inventory : MonoBehaviour
     public ObjectPool infoPanelPool;
     public int Money;
 
-    private GameObject ItemInfoPanel;
-
-
     void Start()
     {
-        ItemInfoPanel = GameObject.FindGameObjectWithTag("ItemInfoPanel");
         EquippedTool = EquippableTools[0];
+        foreach (EquippableTool item in EquippableTools)
+        {
+            item.active = false;
+        }
+        EquippedTool.active = true;
     }
 
     public void addItem(CollectableItemSO data, int quantity)
@@ -49,7 +50,6 @@ public class Inventory : MonoBehaviour
     {
         GameObject infoPanel = infoPanelPool.GetObject();
         infoPanel.GetComponentInChildren<TextMeshProUGUI>().text = data.name + " (" + quantity + ")";
-        infoPanel.transform.SetParent(ItemInfoPanel.transform);
         StartCoroutine(WaitAndDeactivate(infoPanel, 5f));
     }
 
@@ -57,7 +57,6 @@ public class Inventory : MonoBehaviour
     {
         GameObject infoPanel = infoPanelPool.GetObject();
         infoPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Gained: " + amount;
-        infoPanel.transform.SetParent(ItemInfoPanel.transform);
         StartCoroutine(WaitAndDeactivate(infoPanel, 5f));
     }
 
@@ -65,7 +64,13 @@ public class Inventory : MonoBehaviour
     {
         GameObject infoPanel = infoPanelPool.GetObject();
         infoPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Upgraded: " + data.Name;
-        infoPanel.transform.SetParent(ItemInfoPanel.transform);
+        StartCoroutine(WaitAndDeactivate(infoPanel, 5f));
+    }
+
+    public void addTextInfoPanel(string text)
+    {
+        GameObject infoPanel = infoPanelPool.GetObject();
+        infoPanel.GetComponentInChildren<TextMeshProUGUI>().text = text;
         StartCoroutine(WaitAndDeactivate(infoPanel, 5f));
     }
 

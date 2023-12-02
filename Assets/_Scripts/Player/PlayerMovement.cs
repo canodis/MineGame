@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground Check")]
     public LayerMask whatIsGround;
-    [SerializeField] private float gravityScale = -9.81f;
+    [SerializeField] private float gravityScale = -15.81f;
     public float playerHeight;
     public bool grounded;
     private float gravity;
@@ -77,11 +77,7 @@ public class PlayerMovement : MonoBehaviour
         }
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         moveDirection.y += gravity * Time.deltaTime;
-        if (grounded)
-            controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
-        else if (!grounded)
-            controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime * airMultiplier);
-        gravity += gravityScale;
+        controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
     }
 
     public void takeResource()

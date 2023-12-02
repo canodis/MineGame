@@ -8,7 +8,10 @@ public class MineSpawner : MonoBehaviour
     public GameObject[] mines;
     public LayerMask ignoreCollision;
     public Vector3 areaSize;
-    public int mineCount = 10;
+    public int countPerSpawn;
+    public float spawnTimer;
+    public int maxMineCount;
+    public int totalMineCount = 0;
 
     private int totalRarity = 0;
     private int attempts = 5;
@@ -17,7 +20,13 @@ public class MineSpawner : MonoBehaviour
     {
         sortMines();
         findRarity();
-        InvokeRepeating("createMines", 0, 40f);
+        InvokeRepeating("MineSpawnerLoop", 0, spawnTimer);
+    }
+
+    void MineSpawnerLoop()
+    {
+        if (totalMineCount < maxMineCount)
+            createMines();
     }
 
     private void findRarity()
@@ -29,62 +38,47 @@ public class MineSpawner : MonoBehaviour
         }
     }
 
-    void Update()
+    void createMines()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        for (int i = 0; i < countPerSpawn; i++)
         {
-            createMines();
+            InstantiateMine();
         }
     }
 
-    void createMines()
+    private void InstantiateMine()
     {
-        for (int i = 0; i < mineCount; i++)
+        int random = Random.Range(0, totalRarity);
+        int index;
+        Vector3 position;
+        for (int i = 0; i < attempts; i++)
         {
-            int random = Random.Range(0, totalRarity);
-            Vector3 position = getRandomPosition();
-            if (!IsColliding(position))
-            {
-                int index = 0;
-
-                while (random > 0)
-                {
-                    random -= mines[index].GetComponent<Resource>().itemData.Rarity;
-                    if (random <= 0)
-                        break;
-                    index++;
-                }
-                GameObject mine = Instantiate(mines[index], position, Quaternion.identity);
-                mine.transform.parent = transform;
-            }
+            position = getRandomPosition();
+            index = 0;
+            if (IsColliding(position))
+                continue;
             else
+                totalMineCount++;
+            while (random > 0)
             {
-                for (int j = 0; j < attempts; j++)
-                {
-                    position = getRandomPosition();
-                    if (!IsColliding(position))
-                    {
-                        int index = 0;
-
-                        while (random > 0)
-                        {
-                            random -= mines[index].GetComponent<Resource>().itemData.Rarity;
-                            if (random <= 0)
-                                break;
-                            index++;
-                        }
-                        GameObject mine = Instantiate(mines[index], position, Quaternion.identity);
-                        mine.transform.parent = transform;
-                        break;
-                    }
-                }
+                random -= mines[index].GetComponent<Resource>().itemData.Rarity;
+                if (random <= 0)
+                    break;
+                index++;
             }
+            GameObject mine = Instantiate(mines[index], position, Quaternion.identity);
+            mine.transform.parent = transform;
+            break;
         }
     }
 
     Vector3 getRandomPosition()
     {
-        Vector3 position = new Vector3(Random.Range(-areaSize.x, areaSize.x), transform.position.y, Random.Range(-areaSize.z, areaSize.z));
+        Vector3 position = new Vector3(
+        Random.Range(transform.position.x - areaSize.x / 2f, transform.position.x + areaSize.x / 2f),
+        transform.position.y,
+        Random.Range(transform.position.z - areaSize.z / 2f, transform.position.z + areaSize.z / 2f)
+    );
         Ray ray = new Ray(position, Vector3.down);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100f))
@@ -123,5 +117,10 @@ public class MineSpawner : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void decreaseMineCount()
+    {
+        totalMineCount--;
     }
 }

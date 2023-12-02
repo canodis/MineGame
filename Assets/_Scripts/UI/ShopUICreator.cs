@@ -14,13 +14,14 @@ public class ShopUICreator : MonoBehaviour
     public GameObject ItemInfoPanelText;
     public GameObject ItemInfoPanelImage;
     public GameObject SellButton;
-    public RectTransform canvasRect;
-
     public TextMeshProUGUI MoneyText;
+    
+    private UIHelper uIHelper;
 
     private void Start()
     {
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        uIHelper = GameObject.FindGameObjectWithTag("UIHelper").GetComponent<UIHelper>();
         ShopMainPanel.SetActive(false);
     }
 
@@ -39,13 +40,18 @@ public class ShopUICreator : MonoBehaviour
     public void OpenShop()
     {
         ShopMainPanel.SetActive(true);
+        CreateShopItems();
         UpdateMoneyText();
+
+        uIHelper.DeactiveInGamePanel();
     }
 
     public void CloseShop()
     {
         ItemInfoPanel.SetActive(false);
         ShopMainPanel.SetActive(false);
+
+        uIHelper.ActiveInGamePanel();
     }
 
     public void CreateItemInfoPanel(CollectableItemSO itemData, Vector2 position)

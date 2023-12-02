@@ -26,90 +26,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6300817918744330432
-      type: {class: StyleTrainerData, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
-      data:
-        m_Guid: 4da38f11-2b70-4ddf-a889-cfd6a4bc1ac6
-        m_State: 1
-        m_Disposing: 1
-        m_Styles:
-        - rid: 6300817918744330504
-        m_Version: 202231001
-    - rid: 6300817918744330433
-      type: {class: StyleTrainerData, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
-      data:
-        m_Guid: 11000000-0000-0000-0000-000000000011
-        m_State: 1
-        m_Disposing: 0
-        m_Styles:
-        - rid: 6300817918744330505
-        m_Version: 202231001
-    - rid: 6300817918744330503
-      type: {class: StyleData, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
-      data:
-        m_Guid: 00000000-0000-0000-0000-000000000000
-        m_State: 1
-        m_Disposing: 0
-        m_IsFallback: 1
-        m_Thumbnail:
-          rid: -2
-        m_Visible: 0
-        selectedCheckPointGUID: 00000000-0000-0000-0000-000000000000
-        m_FavoriteCheckPointGUID: active
-        parentID: 00000000-0000-0000-0000-000000000000
-        m_ProjectID: 00000000-0000-0000-0000-000000000000
-        m_TrainingSteps: 2000
-        m_CheckPoints:
-        - m_Guid: 00000000-0000-0000-0000-000000000000
-          m_State: 1
-          m_Disposing: 0
-          m_ProjectID: 00000000-0000-0000-0000-000000000000
-          m_Name: Default
-          m_Description: Default style.
-          parent_id: 00000000-0000-0000-0000-000000000000
-          m_TrainingSetData:
-            m_Guid: 
-            m_State: 0
-            m_Disposing: 0
-            m_TrainingSet: []
-            m_ProjectID: 
-          m_ValidationImagesData: []
-          m_TrainingSteps: 2000
-        m_SampleOutputPrompts: []
-        m_TrainingSetData: []
-        m_Name: Default
-        m_Description: Default style.
-    - rid: 6300817918744330504
-      type: {class: StyleData, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
-      data:
-        m_Guid: 
-        m_State: 3
-        m_Disposing: 1
-        m_IsFallback: 0
-        m_Thumbnail:
-          rid: 6300817918744330506
-        m_Visible: 1
-        selectedCheckPointGUID: 00000000-0000-0000-0000-000000000000
-        m_FavoriteCheckPointGUID: 00000000-0000-0000-0000-000000000000
-        parentID: 00000000-0000-0000-0000-000000000000
-        m_ProjectID: 4da38f11-2b70-4ddf-a889-cfd6a4bc1ac6
-        m_TrainingSteps: 2000
-        m_CheckPoints: []
-        m_SampleOutputPrompts:
-        - 
-        - 
-        - 
-        - 
-        m_TrainingSetData:
-        - m_Guid: 00000000-0000-0000-0000-000000000000
-          m_State: 3
-          m_Disposing: 0
-          m_TrainingSet: []
-          m_ProjectID: 4da38f11-2b70-4ddf-a889-cfd6a4bc1ac6
-        m_Name: New Style
-        m_Description: Set a description here to help you remember what this style
-          is for.
-    - rid: 6300817918744330505
+    - rid: 3744916864099942400
       type: {class: StyleData, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
       data:
         m_Guid: 5cc104e0-423a-473e-8034-b9d346cb2357
@@ -194,6 +111,89 @@ MonoBehaviour:
           m_ProjectID: 11000000-0000-0000-0000-000000000011
         m_Name: Default
         m_Description: Default Style
+    - rid: 6300817918744330432
+      type: {class: StyleTrainerData, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
+      data:
+        m_Guid: 4da38f11-2b70-4ddf-a889-cfd6a4bc1ac6
+        m_State: 1
+        m_Disposing: 0
+        m_Styles:
+        - rid: 6300817918744330504
+        m_Version: 202231001
+    - rid: 6300817918744330433
+      type: {class: StyleTrainerData, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
+      data:
+        m_Guid: 11000000-0000-0000-0000-000000000011
+        m_State: 1
+        m_Disposing: 0
+        m_Styles:
+        - rid: 3744916864099942400
+        m_Version: 202231001
+    - rid: 6300817918744330503
+      type: {class: StyleData, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
+      data:
+        m_Guid: 00000000-0000-0000-0000-000000000000
+        m_State: 1
+        m_Disposing: 0
+        m_IsFallback: 1
+        m_Thumbnail:
+          rid: -2
+        m_Visible: 0
+        selectedCheckPointGUID: 00000000-0000-0000-0000-000000000000
+        m_FavoriteCheckPointGUID: active
+        parentID: 00000000-0000-0000-0000-000000000000
+        m_ProjectID: 00000000-0000-0000-0000-000000000000
+        m_TrainingSteps: 2000
+        m_CheckPoints:
+        - m_Guid: 00000000-0000-0000-0000-000000000000
+          m_State: 1
+          m_Disposing: 0
+          m_ProjectID: 00000000-0000-0000-0000-000000000000
+          m_Name: Default
+          m_Description: Default style.
+          parent_id: 00000000-0000-0000-0000-000000000000
+          m_TrainingSetData:
+            m_Guid: 
+            m_State: 0
+            m_Disposing: 0
+            m_TrainingSet: []
+            m_ProjectID: 
+          m_ValidationImagesData: []
+          m_TrainingSteps: 2000
+        m_SampleOutputPrompts: []
+        m_TrainingSetData: []
+        m_Name: Default
+        m_Description: Default style.
+    - rid: 6300817918744330504
+      type: {class: StyleData, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
+      data:
+        m_Guid: 
+        m_State: 3
+        m_Disposing: 0
+        m_IsFallback: 0
+        m_Thumbnail:
+          rid: 6300817918744330506
+        m_Visible: 1
+        selectedCheckPointGUID: 00000000-0000-0000-0000-000000000000
+        m_FavoriteCheckPointGUID: 00000000-0000-0000-0000-000000000000
+        parentID: 00000000-0000-0000-0000-000000000000
+        m_ProjectID: 4da38f11-2b70-4ddf-a889-cfd6a4bc1ac6
+        m_TrainingSteps: 2000
+        m_CheckPoints: []
+        m_SampleOutputPrompts:
+        - 
+        - 
+        - 
+        - 
+        m_TrainingSetData:
+        - m_Guid: 00000000-0000-0000-0000-000000000000
+          m_State: 3
+          m_Disposing: 0
+          m_TrainingSet: []
+          m_ProjectID: 4da38f11-2b70-4ddf-a889-cfd6a4bc1ac6
+        m_Name: New Style
+        m_Description: Set a description here to help you remember what this style
+          is for.
     - rid: 6300817918744330506
       type: {class: ImageArtifact, ns: Unity.Muse.StyleTrainer, asm: Unity.Muse.StyleTrainer}
       data:

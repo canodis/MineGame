@@ -17,10 +17,13 @@ public class UpgradeItemCreator : MonoBehaviour
     public TextMeshProUGUI UpgradeItemName;
     public TextMeshProUGUI UpgradeItemDescription;
     public TextMeshProUGUI UpgradeButtonText;
+    
+    private UIHelper uIHelper;
 
     void Start()
     {
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        uIHelper = GameObject.FindGameObjectWithTag("UIHelper").GetComponent<UIHelper>();
         UpgradePanel.SetActive(false);
         UpgradeMainPanel.SetActive(false);
     }
@@ -50,21 +53,28 @@ public class UpgradeItemCreator : MonoBehaviour
         if (inventory.Money >= item.UpgradePrice)
             UpgradeButtonText.color = Color.green;
         else
-        {
             UpgradeButtonText.color = Color.red;
-            UpgradeButton.interactable = false;
-        }
         UpgradeButtonText.text = "Upgrade";
     }
 
     public void OpenUpgradeMenu()
     {
         UpgradeMainPanel.SetActive(true);
+        CreateItemList();
+    
+        uIHelper.DeactiveInGamePanel();
     }
 
     public void CloseUpgradeMenu()
     {
         UpgradeMainPanel.SetActive(false);
+        UpgradePanel.SetActive(false);
+
+        uIHelper.ActiveInGamePanel();
+    }
+
+    public void CloseUpgradePanel()
+    {
         UpgradePanel.SetActive(false);
     }
 
@@ -79,7 +89,10 @@ public class UpgradeItemCreator : MonoBehaviour
     public void UpgradeItem(EquippableItemSO item)
     {
         if (inventory.Money < item.UpgradePrice)
+        {
+            inventory.addTextInfoPanel("Not enough money");
             return;
+        }
         inventory.Money -= item.UpgradePrice;
         foreach (EquippableTool tool in inventory.EquippableTools)
         {

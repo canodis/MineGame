@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3388232}
   - component: {fileID: 2336098}
   - component: {fileID: 6157559967232251608}
-  m_Layer: 0
+  - component: {fileID: 7277507793559855803}
+  m_Layer: 6
   m_Name: SM_Env_Tree_06
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,3 +106,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6580086, y: 2.3972168, z: 0.5593996}
   m_Center: {x: 0.027048111, y: 1.1986084, z: 0.3753085}
+--- !u!114 &7277507793559855803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 393faf94e277aa146a6840fcf4cde65e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: e8fa6638729fe154a9ccfa086df4876a, type: 2}
+  maxHealth: 30

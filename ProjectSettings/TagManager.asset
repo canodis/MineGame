@@ -13,6 +13,10 @@ TagManager:
   - UICreator
   - ShopItem
   - UpgradeCreator
+  - Canvas
+  - MineSpawner
+  - FracturedPools
+  - UIHelper
   layers:
   - Default
   - TransparentFX
@@ -23,8 +27,8 @@ TagManager:
   - Obstacle
   - 
   - MuseTextureLayer
-  - 
-  - 
+  - Player
+  - Fractured
   - 
   - 
   - 
