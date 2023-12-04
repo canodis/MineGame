@@ -22,8 +22,18 @@ public class Resource : MonoBehaviour
         return false;
     }
 
+    public void setHealth(float health)
+    {
+        this.health = health;
+    }
+
     public string getHealth()
     {
         return health.ToString();
+    }
+
+    public int getHealthInt()
+    {
+        return (int)health;
     }
 }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MineSpawner : MonoBehaviour
+public class MineSpawner : MonoBehaviour, IDataPersistance
 {
+    public string spawnerName;
     public GameObject[] mines;
     public LayerMask ignoreCollision;
+    private List<GameObject> spawnedMines;
     public Vector3 areaSize;
     public int countPerSpawn;
     public float spawnTimer;
@@ -18,9 +20,7 @@ public class MineSpawner : MonoBehaviour
 
     void Start()
     {
-        sortMines();
-        findRarity();
-        InvokeRepeating("MineSpawnerLoop", 0, spawnTimer);
+        spawnedMines = new List<GameObject>();
     }
 
     void MineSpawnerLoop()
@@ -67,6 +67,7 @@ public class MineSpawner : MonoBehaviour
                 index++;
             }
             GameObject mine = Instantiate(mines[index], position, Quaternion.identity);
+            spawnedMines.Add(mine);
             mine.transform.parent = transform;
             break;
         }
@@ -119,8 +120,50 @@ public class MineSpawner : MonoBehaviour
         }
     }
 
+    public void RemoveMineFromList(GameObject mine)
+    {
+        spawnedMines.Remove(mine);
+    }
+
     public void decreaseMineCount()
     {
         totalMineCount--;
     }
+
+    #region Save - Load
+
+    public void LoadData(GameData data)
+    {
+        sortMines();
+        findRarity();
+        List<SpawnerMineData> spawnerMineDatas = data.GetSpawnerMineDatas();
+        foreach (SpawnerMineData mineData in spawnerMineDatas)
+        {
+            if (mineData.spawner == spawnerName)
+            {
+                for (int i = 0; i < mines.Length; i++)
+                {
+                    if (mines[i].GetComponent<Resource>().itemData.Name == mineData.name)
+                    {
+                        GameObject mine = Instantiate(mines[i], mineData.position, Quaternion.identity);
+                        mine.GetComponent<Resource>().maxHealth = mineData.health;
+                        mine.GetComponent<Resource>().setHealth(mineData.health);
+                        spawnedMines.Add(mine);
+                        mine.transform.parent = transform;
+                        totalMineCount++;
+                        break;
+                    }
+                }
+            }
+        }
+        Debug.Log("Loaded " + spawnedMines.Count + " mines from " + spawnerName);
+        InvokeRepeating("MineSpawnerLoop", 5, spawnTimer);
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.SetSpawnerMineData(spawnerName, spawnedMines);
+    }
+
+    #endregion
 }

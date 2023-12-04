@@ -8,9 +8,13 @@ public class EquippableItemSO : ScriptableObject
 
     [field: SerializeField] public Sprite Sprite { get; private set; }
 
-    [field: SerializeField] public int UpgradePrice { get; private set; }
+    [field: SerializeField] public int[] UpgradePrices { get; private set; }
 
-    [field: SerializeField] public int ToolLevel { get; private set; }
+    [field: SerializeField] public int EvolvePrice { get; private set; }
+
+    public int MaxLevel => UpgradePrices.Length;
+
+    [field: SerializeField] public int ToolRank { get; private set; }
 
     [field: SerializeField] public Data.ToolType toolType { get; private set; }
 }

@@ -17,6 +17,9 @@ TagManager:
   - MineSpawner
   - FracturedPools
   - UIHelper
+  - LeftInfoPanel
+  - IconCreator
+  - SoundManager
   layers:
   - Default
   - TransparentFX

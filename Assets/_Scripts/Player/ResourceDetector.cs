@@ -1,24 +1,23 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Data;
 
 public class ResourceDetector : MonoBehaviour
 {
-    [SerializeField] private EquippableTool pickaxe;
     [SerializeField] private Animator anim;
     [SerializeField] private ObjectPool HitEffectPool;
-    [SerializeField] private GameObject hitEffect;
     [SerializeField] private float detectionRadius = 5f;
     [SerializeField] private ResourceInfoController resourceInfoController;
+    [SerializeField] private GameObject playerObject;
 
     public Inventory inventory;
     public Transform pickaxeHitPoint;
     public GameObject Axe;
-    public GameObject Pickaxe;
-    public Material woodMaterial;
     public bool debugDraw;
-    [HideInInspector]public bool mining = false;
+    [HideInInspector] public bool mining = false;
 
+    private SoundManager soundManager;
     private MineSpawner mineSpawner;
     private GameObject resource;
     private equipmentState state;
@@ -30,6 +29,7 @@ public class ResourceDetector : MonoBehaviour
     {
         state = equipmentState.pickaxe;
         mineSpawner = GameObject.FindGameObjectWithTag("MineSpawner").GetComponent<MineSpawner>();
+        soundManager = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundManager>();
     }
 
     public void detectResource()
@@ -65,6 +65,7 @@ public class ResourceDetector : MonoBehaviour
     private void collectMine(GameObject gameObject)
     {
         anim.SetBool("mining", true);
+        StartCoroutine(RotateTowardsMineCoroutine(gameObject.transform.position, 500));
         resource = gameObject;
         resourceMaterial = resource.GetComponentInChildren<MeshRenderer>().material;
         mining = true;
@@ -73,17 +74,21 @@ public class ResourceDetector : MonoBehaviour
 
     public void damageToResource()
     {
+        soundManager.PlayPicaxeHitSound();
         if (resource.GetComponent<Resource>().takeDamage(inventory.EquippedTool.GetComponent<EquippableTool>().damage))
         {
+            soundManager.PlayMineFractionSound();
             inventory.addItem(resource.GetComponent<Resource>().itemData, 1);
+            mineSpawner.RemoveMineFromList(resource);
             mineSpawner.decreaseMineCount();
             resource.GetComponent<FractureObject>().Fracture();
-            Destroy(resource);
+            resource.SetActive(false);
+            Destroy(resource, 1);
             resource = null;
             mining = false;
             anim.SetBool("mining", false);
             resourceInfoController.HideResourceInfoPanel();
-        } 
+        }
         else
             resourceInfoController.UpdateResourceInfo(resource.GetComponent<Resource>());
         GetHitEffect();
@@ -121,5 +126,27 @@ public class ResourceDetector : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         obj.SetActive(false);
+    }
+
+    IEnumerator RotateTowardsMineCoroutine(Vector3 targetPosition, float rotationSpeed)
+    {
+        while (true)
+        {
+            if (anim.GetBool("mining") == false)
+                break;
+            Vector3 direction = targetPosition - playerObject.transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            Quaternion rotationY = Quaternion.LookRotation(Vector3.RotateTowards(playerObject.transform.forward, direction, rotationSpeed * Time.deltaTime, 0.0f));
+
+            rotationY.x = 0;
+            rotationY.z = 0;
+
+            float angle = Quaternion.Angle(playerObject.transform.rotation, targetRotation);
+            playerObject.transform.rotation = Quaternion.RotateTowards(playerObject.transform.rotation, rotationY, rotationSpeed * Time.deltaTime);
+            if (angle < 10.0f)
+                break;
+            yield return null;
+        }
     }
 }

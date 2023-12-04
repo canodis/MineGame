@@ -24,8 +24,8 @@ public class ShopKeeper : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            creator.CloseShop();
             iconCreator.RemoveIconButton();
+            creator.CloseShop(false);
         }
     }
 

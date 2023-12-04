@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ShopUICreator : MonoBehaviour
 {
-    private Inventory inventory;
+    [SerializeField] private IconCreator iconCreator;
     public GameObject ShopMainPanel;
     public GameObject ShopPanel;
     public GameObject ItemImage;
@@ -15,13 +15,16 @@ public class ShopUICreator : MonoBehaviour
     public GameObject ItemInfoPanelImage;
     public GameObject SellButton;
     public TextMeshProUGUI MoneyText;
-    
+
+    private LeftInfoPanel leftInfoPanel;
+    private Inventory inventory;
     private UIHelper uIHelper;
 
     private void Start()
     {
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         uIHelper = GameObject.FindGameObjectWithTag("UIHelper").GetComponent<UIHelper>();
+        leftInfoPanel = GameObject.FindGameObjectWithTag("LeftInfoPanel").GetComponent<LeftInfoPanel>();
         ShopMainPanel.SetActive(false);
     }
 
@@ -46,12 +49,14 @@ public class ShopUICreator : MonoBehaviour
         uIHelper.DeactiveInGamePanel();
     }
 
-    public void CloseShop()
+    public void CloseShop(bool isIconActive)
     {
         ItemInfoPanel.SetActive(false);
         ShopMainPanel.SetActive(false);
 
         uIHelper.ActiveInGamePanel();
+        if (isIconActive == true)
+            iconCreator.CreateIconButton(OpenShop);
     }
 
     public void CreateItemInfoPanel(CollectableItemSO itemData, Vector2 position)
@@ -93,7 +98,7 @@ public class ShopUICreator : MonoBehaviour
     private void SellItem(CollectableItem item, int v)
     {
         inventory.Money += item.itemData.Worth * v;
-        inventory.addMoneyInfoPanel(item.itemData.Worth * v);
+        leftInfoPanel.addMoneyInfoPanel(item.itemData.Worth * v);
         inventory.RemoveItem(item.itemData, v);
 
         ClearItemInfoPanel();

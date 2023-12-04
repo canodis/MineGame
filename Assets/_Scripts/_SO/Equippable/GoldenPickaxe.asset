@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Golden Pickaxe
   <Sprite>k__BackingField: {fileID: 21300000, guid: 541d39dc64555f14187a4939dd31123b, type: 3}
-  <UpgradePrice>k__BackingField: 30000
-  <ToolLevel>k__BackingField: 3
+  <UpgradePrices>k__BackingField: d0070000c4090000b80b0000ac0d0000a00f0000
+  <EvolvePrice>k__BackingField: 5000
+  <ToolRank>k__BackingField: 3
   <toolType>k__BackingField: 1

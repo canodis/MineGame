@@ -24,8 +24,8 @@ public class Anvil : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            creator.CloseUpgradeMenu();
             iconCreator.RemoveIconButton();
+            creator.CloseUpgradeMenu(false);
         }
     }
     private void ButtonClickFunction()
